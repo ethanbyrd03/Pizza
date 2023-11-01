@@ -18,7 +18,8 @@ public class PizzaImpl implements Pizza {
     @Override
     public boolean isVegetarian() {
         for (int i = 0; i < this._toppings.length; i++) {
-            if (!this._toppings[i].isVegetarian()) {
+            if (this._toppings[i].isVegetarian()) {
+            } else {
                 return false;
             }
         }
@@ -27,8 +28,12 @@ public class PizzaImpl implements Pizza {
 
     @Override
     public boolean isVegan() {
+        if (!this._cheese.isVegan()) {
+            return false;
+        }
         for (int i = 0; i < this._toppings.length; i++) {
-            if (!this._toppings[i].isVegan()) {
+            if (this._toppings[i].isVegan()) {
+            } else {
                 return false;
             }
         }
@@ -80,9 +85,7 @@ public class PizzaImpl implements Pizza {
     public Ingredient[] getIngredients() {
 
         Ingredient[] a = new Ingredient[this._toppings.length + 3];
-        for (int i = 0; i < this._toppings.length; i++) {
-            a[i] = this._toppings[i];
-        }
+        System.arraycopy(this._toppings, 0, a, 0, this._toppings.length);
         a[this._toppings.length] = this._crust;
         a[this._toppings.length + 1] = this._sauce;
         a[this._toppings.length + 2] = this._cheese;
